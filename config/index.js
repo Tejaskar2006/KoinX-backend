@@ -1,6 +1,7 @@
 'use strict';
 
 require('dotenv').config();
+const path = require('path');
 
 const config = {
   port: parseInt(process.env.PORT, 10) || 3000,
@@ -19,9 +20,12 @@ const config = {
   },
 
   data: {
-    userCsvPath: process.env.USER_CSV_PATH || './data/user_transactions.csv',
-    exchangeCsvPath:
-      process.env.EXCHANGE_CSV_PATH || './data/exchange_transactions.csv',
+    userCsvPath: process.env.USER_CSV_PATH 
+      ? path.resolve(process.env.USER_CSV_PATH)
+      : path.join(__dirname, '..', 'data', 'user_transactions.csv'),
+    exchangeCsvPath: process.env.EXCHANGE_CSV_PATH 
+      ? path.resolve(process.env.EXCHANGE_CSV_PATH)
+      : path.join(__dirname, '..', 'data', 'exchange_transactions.csv'),
   },
 };
 

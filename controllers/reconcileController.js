@@ -42,6 +42,25 @@ async function triggerReconciliation(req, res) {
 
   logger.info(`[Reconcile] New run created. runId=${runId}`, { tolerance });
 
+  if (process.env.VERCEL || process.env.VERCEL_ENV) {
+    try {
+      await runPipeline(runId, tolerance);
+      return res.status(200).json({
+        success: true,
+        runId,
+        status: 'completed',
+        message: `Reconciliation completed. Call GET /report/${runId} for results.`,
+        config: tolerance,
+      });
+    } catch (err) {
+      logger.error(`[Reconcile] Pipeline crashed for runId=${runId}: ${err.message}`, err);
+      return res.status(500).json({
+        success: false,
+        message: 'Reconciliation failed',
+      });
+    }
+  }
+
   res.status(202).json({
     success: true,
     runId,
