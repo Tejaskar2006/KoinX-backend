@@ -17,15 +17,15 @@ async function connectToDatabase() {
   return db;
 }
 
-// Connect to DB before handling any request
-app.use(async (req, res, next) => {
+// Wrap the Express app to ensure DB connects BEFORE routing
+module.exports = async (req, res) => {
   try {
     await connectToDatabase();
-    next();
   } catch (err) {
     logger.error(`[Serverless] DB Connection Error: ${err.message}`);
-    res.status(500).json({ success: false, message: 'Database connection failed' });
+    return res.status(500).json({ success: false, message: 'Database connection failed' });
   }
-});
-
-module.exports = app;
+  
+  // Pass the request to the Express application
+  return app(req, res);
+};
