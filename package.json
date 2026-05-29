@@ -1,0 +1,32 @@
+{
+  "name": "koinx-reconciliation-engine",
+  "version": "1.0.0",
+  "description": "Transaction Reconciliation Engine for KoinX",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "crypto",
+    "reconciliation",
+    "koinx",
+    "transactions"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "csv-parse": "^5.5.6",
+    "csv-stringify": "^6.5.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-async-errors": "^3.1.1",
+    "joi": "^17.13.1",
+    "mongoose": "^8.4.1",
+    "uuid": "^11.1.1",
+    "winston": "^3.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}
